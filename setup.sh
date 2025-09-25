@@ -11,9 +11,11 @@ mkdir -p "$backup_dir"
 
 echo "backing up existing dotfiles to $backup_dir"
 
+REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 for file in "${files[@]}"; do
   target="$HOME/.$file"
-  source="$HOME/.dotfiles/$file"
+  source="$REPO_DIR/$file"
 
   if [ -e "$target" ] || [ -L "$target" ]; then
     echo "backing up $target"
