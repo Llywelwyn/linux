@@ -4,6 +4,16 @@
 files=(
   bashrc
   config/lazygit/config.yml
+  config/hypr/autostart.conf
+  config/hypr/envs.conf
+  config/hypr/hyprland.conf
+  config/hypr/hyprsunset.conf
+  config/hypr/looknfeel.conf
+  config/hypr/bindings.conf
+  config/hypr/hypridle.conf
+  config/hypr/hyprlock.conf
+  config/hypr/input.conf
+  config/hypr/monitors.conf
 )
 
 backup_dir="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
