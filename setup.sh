@@ -15,6 +15,7 @@ files=(
   config/hypr/input.conf
   config/hypr/monitors.conf
   config/waybar/config.jsonc
+  local/share/omarchy/default/hypr/autostart.conf
 )
 
 backup_dir="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
