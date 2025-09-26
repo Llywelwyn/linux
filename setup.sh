@@ -14,6 +14,7 @@ files=(
   config/hypr/hyprlock.conf
   config/hypr/input.conf
   config/hypr/monitors.conf
+  config/waybar/config.jsonc
 )
 
 backup_dir="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
