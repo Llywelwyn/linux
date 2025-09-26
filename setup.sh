@@ -3,6 +3,7 @@
 # List your dotfiles here (without leading dot)
 files=(
   bashrc
+  XCompose
   config/lazygit/config.yml
   config/hypr/autostart.conf
   config/hypr/envs.conf
