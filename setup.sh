@@ -4,6 +4,7 @@
 files=(
   bashrc
   XCompose
+  config/starship.toml
   config/lazygit/config.yml
   config/hypr/autostart.conf
   config/hypr/envs.conf
