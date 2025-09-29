@@ -1,6 +1,14 @@
 #!/bin/bash
 
-# List your dotfiles here (without leading dot)
+set -euo pipefail
+
+info() { echo -e "\033[1;34m[info]\033[0m $*"; }
+warn() { echo -e "\033[1;33m[warn]\033[0m $*"; }
+
+# List dotfiles here without leading dot. Also supports glob.
+# e.g. config/hypr/autostart.conf
+#      config/hypr/envs.conf
+#      config/waybar/*
 files=(
   bashrc
   XCompose
@@ -24,24 +32,39 @@ files=(
 backup_dir="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$backup_dir"
 
-echo "backing up existing dotfiles to $backup_dir"
+info "backing up existing dotfiles to $backup_dir"
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-for file in "${files[@]}"; do
-  target="$HOME/.$file"
-  source="$REPO_DIR/$file"
+for pattern in "${files[@]}"; do
+  for source in $REPO_DIR/$pattern; do
+    [ -e "$source" ] || continue
 
-  if [ -e "$target" ] || [ -L "$target" ]; then
-    echo "backing up $target"
-    mkdir -p "$(dirname "$backup_dir/.$file")"
-    mv "$target" "$backup_dir/.$file"
-  fi
+    rel_path="${source#$REPO_DIR/}"
+    target="$HOME/.$rel_path"
 
-  echo "creating symlink $target -> $source"
-  mkdir -p "$(dirname "$target")"
-  ln -s "$source" "$target"
+  
+    if [ ! -e "$source" ]; then
+      warn "missing expected file $source"
+      continue
+     fi 
+  
+     if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
+      info "already symlinked $target"
+      continue
+    fi
+   
+    if [ -e "$target" ] || [ -L "$target" ]; then
+      info "backing up $target"
+      mkdir -p "$(dirname "$backup_dir/.$file")"
+      mv "$target" "$backup_dir/.$file"
+    fi
+  
+    info "creating symlink $target -> $source"
+    mkdir -p "$(dirname "$target")"
+    ln -s "$source" "$target"
+  done
 done
 
-echo "setup complete!"
+info "setup complete!"
 
