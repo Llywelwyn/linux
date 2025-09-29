@@ -1,15 +1,14 @@
 #!/bin/bash
-
 set -euo pipefail
 
-info() { echo -e "\033[1;34m[info]\033[0m $*"; }
-warn() { echo -e "\033[1;33m[warn]\033[0m $*"; }
+REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
+BACKUP_DIR="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 
-# List dotfiles here without leading dot. Also supports glob.
+# List dotFILES here without leading dot. Also supports glob.
 # e.g. config/hypr/autostart.conf
 #      config/hypr/envs.conf
 #      config/waybar/*
-files=(
+FILES=(
   bashrc
   XCompose
   config/starship.toml
@@ -30,14 +29,14 @@ files=(
   local/bin/*
 )
 
-backup_dir="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
-mkdir -p "$backup_dir"
+info() { echo -e "\033[1;34m[info]\033[0m $*"; }
+warn() { echo -e "\033[1;33m[warn]\033[0m $*"; }
 
-info "backing up existing dotfiles to $backup_dir"
+mkdir -p "$BACKUP_DIR"
+info "backing up existing dotfiles to $BACKUP_DIR"
 
-REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-for pattern in "${files[@]}"; do
+for pattern in "${FILES[@]}"; do
   for source in $REPO_DIR/$pattern; do
     [ -e "$source" ] || continue
 
@@ -57,8 +56,8 @@ for pattern in "${files[@]}"; do
    
     if [ -e "$target" ] || [ -L "$target" ]; then
       info "backing up $target"
-      mkdir -p "$(dirname "$backup_dir/.$file")"
-      mv "$target" "$backup_dir/.$file"
+      mkdir -p "$(dirname "$BACKUP_DIR/.$file")"
+      mv "$target" "$BACKUP_DIR/.$file"
     fi
   
     info "creating symlink $target -> $source"
