@@ -27,6 +27,7 @@ files=(
   config/waybar/config.jsonc
   local/share/omarchy/default/hypr/autostart.conf
   local/share/omarchy/default/bash/aliases
+  local/bin/*
 )
 
 backup_dir="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
@@ -63,6 +64,11 @@ for pattern in "${files[@]}"; do
     info "creating symlink $target -> $source"
     mkdir -p "$(dirname "$target")"
     ln -s "$source" "$target"
+
+    if head -n1 "$source" | grep -q '^#!'; then
+      info "making $target executable (shebang detected)"
+      chmod +x "$target"
+    fi
   done
 done
 

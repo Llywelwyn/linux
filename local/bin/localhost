@@ -1,0 +1,13 @@
+#!/bin/bash
+
+IP=$(hostname -i | awk '{print $1}')
+PORT=8000
+
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+
+echo "Serving ${YELLOW}${BOLD}$(pwd)${RESET} at ${BLUE}${BOLD}http://$IP:$PORT${RESET}"
+
+python3 -m http.server "$PORT"
