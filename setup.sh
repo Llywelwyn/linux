@@ -21,11 +21,14 @@ FILES=(
   config/fastfetch
   config/hypr
   config/omarchy
+  config/uwsm
   config/waybar
   config/walker
   config/mako
   local/bin/*
+  local/share/omarchy/icon.png
   local/share/omarchy/themes
+  local/share/omarchy/default
 )
 
 info() { echo -e "\033[1;34m[info]\033[0m $*"; }
