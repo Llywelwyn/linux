@@ -22,6 +22,7 @@ FILES=(
   config/hypr
   config/omarchy
   config/waybar
+  config/walker
   config/mako
   local/bin/*
   local/share/omarchy/themes
