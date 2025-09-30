@@ -13,20 +13,18 @@ FILES=(
   inputrc
   XCompose
   config/starship.toml
-  config/lazygit/config.yml
-  config/hypr/autostart.conf
-  config/hypr/envs.conf
-  config/hypr/hyprland.conf
-  config/hypr/hyprsunset.conf
-  config/hypr/looknfeel.conf
-  config/hypr/bindings.conf
-  config/hypr/hypridle.conf
-  config/hypr/hyprlock.conf
-  config/hypr/input.conf
-  config/hypr/monitors.conf
-  config/hypr/windows.conf
-  config/waybar/config.jsonc
+  config/user-dirs.dirs
+  config/user-dirs.locale
+  config/mimeapps.list
+  config/git
+  config/lazygit
+  config/fastfetch
+  config/hypr
+  config/omarchy
+  config/waybar
+  config/mako
   local/bin/*
+  local/share/omarchy/themes
 )
 
 info() { echo -e "\033[1;34m[info]\033[0m $*"; }
@@ -64,9 +62,11 @@ for pattern in "${FILES[@]}"; do
     mkdir -p "$(dirname "$target")"
     ln -s "$source" "$target"
 
-    if head -n1 "$source" | grep -q '^#!'; then
-      info "making $target executable (shebang detected)"
-      chmod +x "$target"
+    if [ -f "$source" ]; then 
+     if head -n1 "$source" | grep -q '^#!'; then
+       info "making $target executable (shebang detected)"
+       chmod +x "$target"
+     fi
     fi
   done
 done
