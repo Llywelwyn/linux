@@ -56,8 +56,8 @@ for pattern in "${FILES[@]}"; do
    
     if [ -e "$target" ] || [ -L "$target" ]; then
       info "backing up $target"
-      mkdir -p "$(dirname "$BACKUP_DIR/.$file")"
-      mv "$target" "$BACKUP_DIR/.$file"
+      mkdir -p "$(dirname "$BACKUP_DIR/.$rel_path")"
+      mv "$target" "$BACKUP_DIR/.$rel_path"
     fi
   
     info "creating symlink $target -> $source"
