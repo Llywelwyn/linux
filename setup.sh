@@ -10,6 +10,7 @@ BACKUP_DIR="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 #      config/waybar/*
 FILES=(
   bashrc
+  inputrc
   XCompose
   config/starship.toml
   config/lazygit/config.yml
@@ -23,9 +24,8 @@ FILES=(
   config/hypr/hyprlock.conf
   config/hypr/input.conf
   config/hypr/monitors.conf
+  config/hypr/windows.conf
   config/waybar/config.jsonc
-  local/share/omarchy/default/hypr/autostart.conf
-  local/share/omarchy/default/bash/aliases
   local/bin/*
 )
 
