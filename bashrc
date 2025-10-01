@@ -71,8 +71,20 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../../'
-alias docs="cd ~/Documents"
-alias dl="cd ~/Downloads"
+
+if [ -f "$HOME/.config/user-dirs.dirs" ]; then
+  source "$HOME/.config/user-dirs.dirs"
+fi
+
+alias dcim="cd ~/dcim"
+alias docs="cd ${XDG_DOCUMENTS_DIR:-$HOME/Documents}"
+alias dl="cd ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}"
+alias dt="cd ${XDG_DESKTOP_DIR:-$HOME/Desktop}"
+alias music="cd ${XDG_MUSIC_DIR:-$HOME/Music}"
+alias pictures="cd ${XDG_PICTURES_DIR:-$HOME/Pictures}"
+alias videos="cd ${XDG_VIDEOS_DIR:-$HOME/Videos}"
+alias pics=pictures
+alias vids=videos
 
 repo() {
     local SRC_DIRECTORY="${1:-$HOME/src}"
