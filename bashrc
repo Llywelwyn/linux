@@ -78,13 +78,12 @@ fi
 
 alias dcim="cd ~/dcim"
 alias docs="cd ${XDG_DOCUMENTS_DIR:-$HOME/Documents}"
+alias notes="cd ${XDG_DOCUMENTS_DIR:-$HOME/Documents}/lib && ls"
 alias dl="cd ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}"
 alias dt="cd ${XDG_DESKTOP_DIR:-$HOME/Desktop}"
 alias music="cd ${XDG_MUSIC_DIR:-$HOME/Music}"
-alias pictures="cd ${XDG_PICTURES_DIR:-$HOME/Pictures}"
-alias videos="cd ${XDG_VIDEOS_DIR:-$HOME/Videos}"
-alias pics=pictures
-alias vids=videos
+alias pics="cd ${XDG_PICTURES_DIR:-$HOME/Pictures}"
+alias vids="cd ${XDG_VIDEOS_DIR:-$HOME/Videos}"
 
 repo() {
     local SRC_DIRECTORY="${1:-$HOME/src}"
