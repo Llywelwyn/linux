@@ -4,8 +4,7 @@
 from `~` and replaced with a symlink to the file located inside the repo.
 
 
-when listing files, don't include the preceding dot. this is just to make
-it less annoying when modifying the repo
+when listing files, don't include the preceding dot
 
 e.g.
 if you want to include `~/.bashrc`, it should be at the root of wherever 
