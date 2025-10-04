@@ -18,6 +18,7 @@ if [[ ! -v BASH_COMPLETION_VERSINFO && -f /usr/share/bash-completion/bash_comple
 fi
 
 export SUDO_EDITOR="$EDITOR"
+export SYSTEMD_EDITOR="$EDITOR"
 export BAT_THEME=ansi
 
 force_color_prompt=yes
@@ -42,19 +43,6 @@ if command -v fzf &> /dev/null; then
   if [[ -f /usr/share/fzf/key-bindings.bash ]]; then
     source /usr/share/fzf/key-bindings.bash
   fi
-fi
-
-###########################
-# Check OpenVPN is runni. #
-###########################
-
-SERVICE="openvpn-client@nl263.protonvpn"
-VPN_IF="tun0"
-
-if ! systemctl is-active --quiet "$SERVICE"; then
-  echo "$SERVICE is NOT connected!"
-elif ! ip addr show "$VPN_IF" &>/dev/null; then
-  echo "VPN interface $VPN_IF is down!"
 fi
 
 ###########################
