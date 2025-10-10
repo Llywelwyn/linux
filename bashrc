@@ -5,6 +5,7 @@
 ###########################
 
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 set +h
 [[ $- == *i* ]] && bind -f ~/.inputrc
 
