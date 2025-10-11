@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Toggle a specific optional Hyprland config in ~/.config/hypr/hyprland.conf
+
+RESET="\033[0m"
+RED="\033[1m\033[031m"
+GREEN="\033[1m\033[032m"
+
+CONFIG="$HOME/.config/hypr/hyprland.conf"
+
+hyprtoggle_list() {
+    grep -E "^[[:space:]#]*source = .*opts/.*\.conf" "$CONFIG" | while read -r line; do
+        name=$(basename "$(echo "$line" | grep -oE "[^/]+\.conf$")" .conf)
+        if [[ "$line" =~ ^# ]]; then
+            echo -e " ${RED}✗${RESET} $name"
+        else
+            echo -e " ${GREEN}✓${RESET} $name"
+        fi
+    done
+}
+
+if [ ! -f "$CONFIG" ]; then
+    echo -e "${RED}✗${RESET}config not found at $CONFIG"
+    exit 1
+fi
+
+if [ -z "$1" ]; then
+    echo "usage: hyprtoggle <option_name>"
+    hyprtoggle_list
+    exit 1
+fi
+
+OPT="$1"
+
+# Check if the line is currently active or commented
+if grep -qE "^[[:space:]]*source = .*${OPT}\.conf" "$CONFIG"; then
+    echo -e "${RED}disabling${RESET} $OPT..."
+    sed -i "s|^[[:space:]]*source = \(.*${OPT}\.conf\)|# source = \1|" "$CONFIG"
+elif grep -qE "^#\s*source = .*${OPT}\.conf" "$CONFIG"; then
+    echo -e "${GREEN}enabling${RESET} $OPT..."
+    sed -i "s|^#\s*source = \(.*${OPT}\.conf\)|source = \1|" "$CONFIG"
+else
+    echo -e "${RED}✗ no matching source${RESET} for '$OPT'"
+    exit 1
+fi
+
+hyprtoggle_list
