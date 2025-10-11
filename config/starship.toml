@@ -1,10 +1,40 @@
 add_newline = true
 command_timeout = 200
-format = "[$directory$git_branch$git_status]($style)$character"
+format = "$shell$username$hostname[$directory$git_branch$git_status]($style)$status"
+
+[shell]
+style = "bold cyan"
+fish_indicator = "[f](bold blue)"
+bash_indicator = "[b](bold red)"
+disabled = false
 
 [character]
 error_symbol = "[x](bold red)"
 success_symbol = "[>](bold cyan)"
+
+[status]
+format = "[$symbol]($style) "
+disabled = false
+symbol = ""
+success_symbol = "[>](bold green)"
+map_symbol = true
+sigint_symbol = "sigint"
+not_executable_symbol = "noexec"
+not_found_symbol = "notfound"
+
+[username]
+format = "[$user]($style)"
+style_root = "bold red"
+style_user = "yellow bold"
+show_always = false
+aliases = { "lew" = "me" }
+
+[hostname]
+format = "@[$ssh_symbol$hostname]($style) "
+ssh_only = true
+ssh_symbol = "?"
+style = "yellow dimmed bold"
+aliases = { "archlinux" = "localhost" }
 
 [directory]
 truncation_length = 5
