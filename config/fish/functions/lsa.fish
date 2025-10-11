@@ -1,3 +1,3 @@
-function lsa --wraps='ls -a'
-    eza -lh --group-directories-first --icons=auto -a;
+function lsa --wraps='ls -a' --description 'alias lsa=ls -a'
+    ls -a $argv
 end
