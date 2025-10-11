@@ -14,8 +14,11 @@ FILES=(
   XCompose
   config/starship.toml
   config/user-dirs.dirs
+  config/user-dirs.fish
   config/user-dirs.locale
   config/mimeapps.list
+  config/alacritty
+  config/fish
   config/git
   config/lazygit
   config/fastfetch

@@ -1,4 +1,3 @@
-
 [Default Applications]
 image/png=imv.desktop
 image/jpeg=imv.desktop
@@ -28,4 +27,10 @@ video/x-ogm+ogg=mpv.desktop
 video/x-theora+ogg=mpv.desktop
 application/ogg=mpv.desktop
 x-scheme-handler/discord=vesktop.desktop
-x-scheme-handler/mailto=chromium.desktop
+x-scheme-handler/mailto=userapp-Thunderbird-WKH9D3.desktop
+message/rfc822=userapp-Thunderbird-WKH9D3.desktop
+x-scheme-handler/mid=userapp-Thunderbird-WKH9D3.desktop
+
+[Added Associations]
+x-scheme-handler/mailto=userapp-Thunderbird-WKH9D3.desktop;
+x-scheme-handler/mid=userapp-Thunderbird-WKH9D3.desktop;
