@@ -1,0 +1,268 @@
+// This config is in the KDL format: https://kdl.dev
+// "/-" comments out the following node.
+// https://yalter.github.io/niri/Configuration:-Introduction
+
+// https://yalter.github.io/niri/Configuration:-Input
+input {
+    keyboard {
+        xkb {
+            layout "gb"
+            options "compose:caps"
+        }
+        numlock
+    }
+    touchpad {
+        tap
+        dwtp
+        accel-profile "flat"
+        scroll-method "two-finger"
+    }
+    mouse {
+        accel-profile "flat"
+    }
+    trackpoint {
+        accel-profile "flat"
+    }
+    warp-mouse-to-focus
+    focus-follows-mouse max-scroll-amount="95%"
+}
+
+// https://yalter.github.io/niri/Configuration:-Outputs
+/-output "eDP-1" {
+    mode "1920x1080@60"
+    scale 1
+    transform "normal"
+    // Position of the output in the global coordinate space.
+    // outputs are sized in logical, or scaled, pixels.
+    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
+    // so to put another output directly adjacent to it on the right, set its x to 1920.
+    // If the position is unset or results in an overlap, the output is instead placed
+    // automatically.
+    position x=1920 y=0
+}
+
+// https://yalter.github.io/niri/Configuration:-Layout
+layout {
+    gaps 5
+    center-focused-column "never"
+    // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    // preset-window-heights { }
+
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        off
+    }
+
+    border {
+        width 2
+        active-color "#ffc87f"
+        inactive-color "#505050"
+        urgent-color "#9b0000"
+        active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
+        inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+    }
+
+    shadow {
+        on
+        draw-behind-window false
+        softness 5
+        spread 2
+        offset x=0 y=5
+        color "#0007"
+    }
+
+    struts {
+        // left 64
+        // right 64
+        // top 64
+        // bottom 64
+    }
+}
+
+spawn-at-startup "hypridle"
+spawn-at-startup "mako"
+spawn-at-startup "waybar"
+spawn-sh-at-startup "uwsm app -- swaybg -i ~/.config/omarchy/current/background -m fill"
+spawn-at-startup "swayosd-server"
+spawn-sh-at-startup "uwsm app --walker --gapplication-service &"
+spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-sh-at-startup "wl-clip-persist --clipboard regular -all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'"
+spawn-sh-at-startup "hyprpm reload"
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+prefer-no-csd
+screenshot-path "~/dcim/pictures/screenshots/screenshot from %Y-%m-%d %H-%M-%S.png"
+// screenshot-path null
+
+// https://yalter.github.io/niri/Configuration:-Animations
+animations {
+    // off
+    // slowdown 3.0
+}
+
+window-rule {
+    open-maximized false
+}
+
+window-rule {
+    match is-focused=false
+    opacity 0.9
+}
+
+window-rule {
+    match is-focused=true
+    opacity 0.97
+}
+
+window-rule {
+    match title="Chromium"
+    match is-focused=true
+    opacity 1.0
+}
+
+window-rule {
+    match title="Chromium"
+    match is-focused=false
+    opacity 0.97
+}
+
+window-rule {
+    match title="youtube"
+    match title="netflix"
+    opacity 1.0
+}
+
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+    block-out-from "screen-capture"
+}
+
+
+binds {
+    Mod+K                 { show-hotkey-overlay; }
+    Mod+0                 repeat=false           { toggle-overview; }
+    Mod+W                 repeat=false           { close-window; }
+
+    // Spawning apps.
+    Mod+Return            { spawn "alacritty"; }
+    Mod+Space             { spawn-sh "walker -p start"; }
+    Mod+F                 { spawn-sh "uwsm app -- nautilus --new-window"; }
+    Mod+B                 { spawn-sh "omarchy-launch-browser"; }
+    Mod+Shift+B           { spawn-sh "omarchy-launch-browser --private"; }
+    Mod+N                 { spawn-sh "omarchy-launch-editor"; }
+    Mod+T                 { spawn-sh "uwsm app -- ${TERMINAL} -e btop"; }
+
+    // Media controls.
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioMute         allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute      allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioPlay         allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop         allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev         allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext         allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+
+    // Changing focus.
+    Mod+Left              { focus-column-left; }
+    Mod+Down              { focus-window-or-workspace-down; }
+    Mod+Up                { focus-window-or-workspace-up; }
+    Mod+Right             { focus-column-right; }
+
+    // Moving windows.
+    Mod+Shift+Left        { move-column-left; }
+    Mod+Shift+Down        { move-window-down-or-to-workspace-down; }
+    Mod+Shift+Up          { move-window-up-or-to-workspace-up; }
+    Mod+Shift+Right       { move-column-right; }
+
+    // Focus columns.
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    
+    // Moving columns.
+    Mod+Shift+Home { move-column-to-first; }
+    Mod+Shift+End  { move-column-to-last; }
+
+    // Changing monitor focus.
+    Mod+Alt+Left  { focus-monitor-left; }
+    Mod+Alt+Down  { focus-monitor-down; }
+    Mod+Alt+Up    { focus-monitor-up; }
+    Mod+Alt+Right { focus-monitor-right; }
+
+    // Moving window to monitor.
+    Mod+Alt+Shift+Left  { move-column-to-monitor-left; }
+    Mod+Alt+Shift+Down  { move-column-to-monitor-down; }
+    Mod+Alt+Shift+Up    { move-column-to-monitor-up; }
+    Mod+Alt+Shift+Right { move-column-to-monitor-right; }
+
+    // Moving workspace to monitor.
+    Mod+Shift+Comma      { move-workspace-to-monitor-left; }
+    Mod+Shift+Period     { move-workspace-to-monitor-right; }
+
+    Mod+Page_Down      { focus-workspace-down; }
+    Mod+Page_Up        { focus-workspace-up; }
+    Mod+Shift+Page_Down { move-column-to-workspace-down; }
+    Mod+Shift+Page_Up   { move-column-to-workspace-up; }
+
+    Mod+Alt+Page_Down { move-workspace-down; }
+    Mod+Alt+Page_Up   { move-workspace-up; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+
+    Mod+Tab { focus-workspace-previous; }
+
+    Mod+Comma  { consume-or-expel-window-left; }
+    Mod+Period { consume-or-expel-window-right; }
+
+    Mod+Colon { switch-preset-column-width; }
+    Mod+Apostrophe { maximize-column; }
+    // Mod+Shift+F { fullscreen-window; }
+    // Mod+Ctrl+F { expand-column-to-available-width; }
+    // Mod+C { center-column; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+C { toggle-column-tabbed-display; }
+
+    Print       { screenshot; }
+    Ctrl+Print  { screenshot-screen; }
+    Alt+Print   { screenshot-window; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Ctrl+Alt+Delete { quit; }
+    Mod+Shift+P { power-off-monitors; }
+
+    // Themes.
+    Mod+Shift+Space { spawn-sh "omarchy-toggle-waybar"; }
+    Mod+Ctrl+Space { spawn-sh "omarchy-theme-bg-next"; }
+    Mod+Shift+Ctrl+Space { spawn-sh "omarchy-menu theme"; }
+    
+    // Notifications.
+    Mod+Ctrl+Comma { spawn-sh "makoctl dismiss"; }
+}

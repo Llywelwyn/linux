@@ -22,6 +22,7 @@ FILES=(
   config/git
   config/lazygit
   config/fastfetch
+  config/niri
   config/hypr
   config/omarchy
   config/uwsm
