@@ -5,7 +5,6 @@
   "spacing": 3,
   "height": 26,
   "modules-left": [
-    "custom/omarchy",
     "hyprland/workspaces"
   ],
   "modules-center": [
@@ -28,23 +27,10 @@
     "format": "{icon}",
     "format-icons": {
       "default": "",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "active": "󱓻"
-    },
-    "persistent-workspaces": {}
-  },
-  "custom/omarchy": {
-    "format": "<span font='omarchy'>\ue900</span>",
-    "on-click": "omarchy-menu",
-    "tooltip-format": "Omarchy Menu\n\nSuper + Alt + Space"
+      "active": "󱓻",
+      "visible": "󱓻",
+      "empty": "◦"
+    }
   },
   "custom/update": {
     "format": "",
