@@ -1,4 +1,4 @@
-general.import = [ "~/.config/omarchy/current/theme/alacritty.toml" ]
+general.import = ["~/.config/omarchy/current/theme/alacritty.toml"]
 
 [terminal.shell]
 program = "/usr/bin/fish"
@@ -20,7 +20,8 @@ decorations = "None"
 
 [keyboard]
 bindings = [
-{ key = "F11", action = "ToggleFullscreen" }
+    { key = "F11", action = "ToggleFullscreen" },
+    { key = "Insert", mods = "Shift", action = "Paste" },
 ]
 
 [terminal]
