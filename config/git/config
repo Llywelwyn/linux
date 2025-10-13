@@ -8,7 +8,7 @@
 [init]
 	defaultBranch = master
 [user]
-	email = lew@ily2.dev
+	email = lew@ily.rs
 	name = lew
 [url "git@github.com:"]
 	insteadOf = https://github.com/
