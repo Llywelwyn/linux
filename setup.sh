@@ -29,7 +29,7 @@ FILES=(
   config/walker
   config/mako
   local/bin/*
-  local/share/applications/nvim.desktop
+  local/share/applications
   local/share/omarchy/bin
   local/share/omarchy/icon.svg
   local/share/omarchy/icon.png
