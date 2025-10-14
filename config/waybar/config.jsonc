@@ -86,37 +86,39 @@
     "format": "DSK {percentage_used}"
   },
   "battery": {
-    "format": "BAT {capacity}",
-    "format-discharging": "BAT {capacity}",
-    "format-charging": "BAT {capacity}+",
-    "format-plugged": "AC",
+    "format": "{icon}",
+    "format-discharging": "{icon}",
+    "format-charging": "{icon}",
+    "format-plugged": "=== AC ===",
     "format-icons": {
       "charging": [
-        "󰢜",
-        "󰂆",
-        "󰂇",
-        "󰂈",
-        "󰢝",
-        "󰂉",
-        "󰢞",
-        "󰂊",
-        "󰂋",
-        "󰂅"
+        "+---------",
+        "=+--------",
+        "==+-------",
+        "===+------",
+        "====+-----",
+        "=====+----",
+        "======+---",
+        "=======+--",
+        "========+-",
+        "=========+",
+        "=========="
       ],
       "default": [
-        "󰁺",
-        "󰁻",
-        "󰁼",
-        "󰁽",
-        "󰁾",
-        "󰁿",
-        "󰂀",
-        "󰂁",
-        "󰂂",
-        "󰁹"
+        "----------",
+        "=---------",
+        "==--------",
+        "===-------",
+        "====------",
+        "=====-----",
+        "======----",
+        "=======---",
+        "========--",
+        "=========-",
+        "=========="
       ]
     },
-    "format-full": "BAT FULL",
+    "format-full": "== FULL ==",
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "interval": 5,
@@ -127,17 +129,25 @@
     }
   },
   "pulseaudio": {
-    "format": "VOL {volume}",
+    "format": "{icon}",
     "on-click": "$TERMINAL --class=Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 2,
-    "format-muted": "MUTED",
+    "format-muted": "---mute---",
     "format-icons": {
       "default": [
-        "-",
-        "=",
-        "≡"
+        "----------",
+        "=---------",
+        "==--------",
+        "===-------",
+        "====------",
+        "=====-----",
+        "======----",
+        "=======---",
+        "========--",
+        "=========-",
+        "=========="
       ]
     }
   },
