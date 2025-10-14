@@ -38,9 +38,14 @@
 #pulseaudio,
 #custom-omarchy,
 #custom-screenrecording-indicator,
+#custom-do-not-disturb-indicator,
 #custom-update {
   min-width: 12px;
   margin: 0 7.5px;
+}
+
+#custom-do-not-disturb-indicator {
+  color: red;
 }
 
 #custom-expand-icon {
@@ -57,6 +62,7 @@ tooltip {
 
 #clock {
   margin-left: 8.75px;
+  margin-right: 8.75px;
 }
 
 .hidden {

@@ -5,12 +5,13 @@
   "spacing": 3,
   "height": 26,
   "modules-left": [
-    "hyprland/workspaces"
-  ],
-  "modules-center": [
     "clock",
     "custom/update",
-    "custom/screenrecording-indicator"
+    "custom/screenrecording-indicator",
+    "custom/do-not-disturb-indicator"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
   ],
   "modules-right": [
     "tray",
@@ -39,6 +40,12 @@
     "tooltip-format": "Omarchy update available",
     "signal": 7,
     "interval": 3600
+  },
+  "custom/do-not-disturb-indicator": {
+    "on-click": "makoctl mode -t do-not-disturb && notify-send 'Enabled notificaitons'",
+    "exec": "$OMARCHY_PATH/default/waybar/indicators/do-not-disturb.sh",
+    "signal": 9,
+    "return-type": "json"
   },
   "memory": {
     "interval": 5,
