@@ -1,9 +1,15 @@
+# setup.sh
+# backs up listed config files, replacing with symlinks from this pwd
+# Usage: [DRY_RUN=1] [HOME_DIR=/tmp/tmphome] bash setup.sh
+
 #!/bin/bash
 set -euo pipefail
 
+HOME_DIR="${HOME_DIR:-$HOME}"
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
-BACKUP_DIR="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
+BACKUP_DIR="$HOME_DIR/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 DONE_FILE="$REPO_DIR/.last_run.list"
+DRY_RUN=${DRY_RUN:-0}
 
 FILES=(
   bashrc
@@ -35,11 +41,19 @@ FILES=(
   local/share/omarchy/default
 )
 
+run() {
+  if [ "$DRY_RUN" -eq 1 ]; then
+    echo "[dry-run] $*"
+  else
+    eval "$@"
+  fi
+}
+
 info() { echo -e "\033[1;34m[info]\033[0m $*"; }
 warn() { echo -e "\033[1;33m[warn]\033[0m $*"; }
 
-mkdir -p "$BACKUP_DIR"
-info "backing up existing dotfiles to $BACKUP_DIR"
+run mkdir -p "$BACKUP_DIR"
+run info "backing up existing dotfiles to $BACKUP_DIR"
 
 if [ -f "$DONE_FILE" ]; then
   info "checking for stale symlinks"
@@ -55,10 +69,10 @@ if [ -f "$DONE_FILE" ]; then
 
   for rel_path in "${OLD_FILES[@]}"; do
     if [ -z "${CURRENT["$rel_path"]+x}" ]; then
-      target="$HOME/.$rel_path"
+      target="$HOME_DIR/.$rel_path"
       if [ -L "$target" ]; then
         info "removing stale symlink $target"
-        rm "$target"
+        run rm "$target"
       fi
     fi
   done
@@ -71,7 +85,7 @@ for pattern in "${FILES[@]}"; do
     [ -e "$source" ] || continue
 
     rel_path="${source#$REPO_DIR/}"
-    target="$HOME/.$rel_path"
+    target="$HOME_DIR/.$rel_path"
 
     if [ ! -e "$source" ]; then
       warn "missing expected file $source"
@@ -86,17 +100,17 @@ for pattern in "${FILES[@]}"; do
 
     if [ -e "$target" ] || [ -L "$target" ]; then
       info "backing up $target"
-      mkdir -p "$(dirname "$BACKUP_DIR/.$rel_path")"
-      mv "$target" "$BACKUP_DIR/.$rel_path"
+      run mkdir -p "$(dirname "$BACKUP_DIR/.$rel_path")"
+      run mv "$target" "$BACKUP_DIR/.$rel_path"
     fi
 
     info "creating symlink $target -> $source"
-    mkdir -p "$(dirname "$target")"
-    ln -s "$source" "$target"
+    run mkdir -p "$(dirname "$target")"
+    run ln -s "$source" "$target"
 
     if [ -f "$source" ] && head -n1 "$source" | grep -q '^#!'; then
       info "making $target executable (shebang detected)"
-      chmod +x "$target"
+      run chmod +x "$target"
     fi
 
     echo "$rel_path" >> "$DONE_FILE"
@@ -104,4 +118,6 @@ for pattern in "${FILES[@]}"; do
 done
 
 info "setup complete!"
+
+info "maintaining $(wc -l < "$DONE_FILE") symlinks"
 
