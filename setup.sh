@@ -22,6 +22,7 @@ FILES=(
   config/mimeapps.list
   config/chromium-flags.conf
   config/alacritty
+  config/elephant
   config/fish
   config/git
   config/lazygit
