@@ -1,6 +1,14 @@
 set -x PATH $HOME/.local/bin $PATH
 set -x PATH $HOME/.cargo/bin $PATH
 
+if status is-interactive
+    if test -z "$TMUX"
+        if type -q tmux
+            tmux attach-session -t default 2>/dev/null; or tmux new-session -s default
+        end
+    end
+end
+
 if type -q starship
     starship init fish | source
 end

@@ -12,6 +12,7 @@ DONE_FILE="$REPO_DIR/.last_run.list"
 DRY_RUN=${DRY_RUN:-0}
 
 FILES=(
+  tmux.conf
   bashrc
   inputrc
   XCompose
