@@ -25,15 +25,20 @@ if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
     exit 0
 fi
 
-# Create session if it doesn't exist
 if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+    # Create a new session and rename the first window to Shell.
     tmux new-session -ds "$selected_name" -c "$selected"
-    tmux new-window -t "$selected_name:1" -c "$selected" -n "Nvim"
+    tmux rename-window -t "$selected_name:0" "Shell"
+    # Create a second window for Neovim.
+    tmux new-window -t "$selected_name:1" -c "$selected" -n "Neovim"
     tmux send-keys -t "$selected_name:1" "nvim" Enter
-    tmux send-keys -t "$selected_name:1" Space /
+    # Create a window for git.
+    tmux new-window -t "$selected_name:2" -c "$selected" -n "Git"
+    tmux send-keys -t "$selected_name:2" "lazygit" Enter
+    # Start with the first window selected.
+    tmux select-window -t "$selected_name:0"
 fi
 
-# Attach or switch
 if [[ -z $TMUX ]]; then
     tmux attach -t "$selected_name"
 else
